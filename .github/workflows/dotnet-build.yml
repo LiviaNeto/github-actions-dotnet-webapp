@@ -23,7 +23,7 @@ jobs:
     - name: Encontrar arquivo de solução
       id: find-sln
       run: |
-        echo "SOLUTION_FILE=$(find . -type f -name "*.sln" -o -name "*.csproj" | head -n 1)" >> $GITHUB_ENV
+        echo "SOLUTION_FILE=$(find ./github4women -type f -name \"*.sln\" -o -name \"*.csproj\" | head -n 1)" >> $GITHUB_ENV
         if [ -z "$SOLUTION_FILE" ]; then
           echo "Nenhum arquivo .sln ou .csproj encontrado no repositório"
           exit 1
