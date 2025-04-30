@@ -20,8 +20,15 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
-    - name: Restaurar dependências
-      run: dotnet restore
+    - name: Encontrar arquivo de solução
+      id: find-sln
+      run: |
+        echo "SOLUTION_FILE=$(find . -type f -name "*.sln" -o -name "*.csproj" | head -n 1)" >> $GITHUB_ENV
+        if [ -z "$SOLUTION_FILE" ]; then
+          echo "Nenhum arquivo .sln ou .csproj encontrado no repositório"
+          exit 1
+        fi
+        echo "Arquivo encontrado: $SOLUTION_FILE"
 
     - name: Build do projeto
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build ${{ env.SOLUTION_FILE }} --configuration Release
